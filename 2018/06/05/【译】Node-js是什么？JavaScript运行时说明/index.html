@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-ae44e156b03b2ff9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-cab8bfc3dfb8eaf8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-8a435258f8030128.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-20T03:01:53.780Z">
+<meta property="og:updated_time" content="2019-02-20T03:32:52.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】Node-js是什么？JavaScript运行时说明">
 <meta name="twitter:description" content="原文链接：https://www.infoworld.com/article/3210589/node-js/what-is-nodejs-javascript-runtime-explained.html Node.js是一个精简、快速、跨平台的JavaScript运行时环境，被用在服务器端和桌面应用。    伸缩性、延迟、吞吐量是web服务器的几个核心性能指标。当访问量增大时依旧能保持低延迟和">
@@ -319,7 +319,7 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/5613261-ae44e156b03b2ff9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>  </p>
 <p>伸缩性、延迟、吞吐量是web服务器的几个核心性能指标。当访问量增大时依旧能保持低延迟和高吞吐是不容易的。Node.js是一个通过对服务器请求“非阻塞”响应的方法实现低延迟和高吞吐的JavaScript运行时环境。换句话说，Node.js在等待I/O请求响应时不浪费时间和资源。</p>
 <p>让我接着解释…</p>
-<p>传统的创建web服务器方法，对于每一个进来的请求或连接服务器都产生一个执行线程甚至一个进程来处理请求和做出回应。从概念上说，这似乎非常完美，但实际中这产生了很大的开销。</p>
+<p>传统的创建web服务器方法，对于每一个进来的请求或连接服务器都产生一个执行线程甚至一个进程来处理请求和做出回应。从概念上说，这似乎非常完美，但实际上这产生了很大的开销。</p>
 <p>尽管创建线程比分配进程花费更少的内存和CPU开销，但这依然是低效的。大量线程的存在使系统负担严重，在线程安排和上下文切换的循环中花费开销，这增加了延迟，同时也限制了服务器的伸缩性和吞吐量。</p>
 <p>Node.js使用了一种不同的方法。它运行了一个单线程的事件循环地向系统注册来处理连接，每一个新连接都会触发JavaScript的回调函数开始执行。回调函数可以使用非阻塞的I/O调用处理请求，在必要时也可以从线程池中生产线程执行阻塞的或CPU密集型的操作并且跨CPU核心达到负载均衡。和利用多线程发挥最强效率的项目包括Apache HTTP Server、各种各样的Java应用服务器、IIS、ASP.NET、以及 Ruby on Rails相比，Node使用回调函数的方法花费更少的内存处理更多的连接。</p>
 <p>Node.js已经被验证除了服务器端，它在桌面应用领域也十分有效。请注意Node应用不仅限于纯JavaScript。你可以使用任何语言替换JavaScript，例如TypeScript和CoffeeScript。Node.js结合了Google Chrome V8 JavaScript引擎，支持ECMAScript 2015 (ES6)语法，并且不需要任何像Babel那样转换ES6和ES5的编译器。</p>
