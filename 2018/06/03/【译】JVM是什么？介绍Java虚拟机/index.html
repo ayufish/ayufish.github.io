@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：https://www.javaworld.com/article/3272244/core-java/what-is-the-jvm-introducing-the-java-virtual-machine.html Java虚拟机是一个执行其他程序的程序。这是一个简单的想法，但这也是最伟大的编程想法之一。它打破了当时的编程技术状况，直到今日，仍然支持着程序设计上的革新。 JVM（">
+<meta name="keywords" content="Java 思想 技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】JVM是什么？介绍Java虚拟机">
+<meta property="og:url" content="http://notyet.com/2018/06/03/【译】JVM是什么？介绍Java虚拟机/index.html">
+<meta property="og:site_name" content="鱼的站">
+<meta property="og:description" content="原文链接：https://www.javaworld.com/article/3272244/core-java/what-is-the-jvm-introducing-the-java-virtual-machine.html Java虚拟机是一个执行其他程序的程序。这是一个简单的想法，但这也是最伟大的编程想法之一。它打破了当时的编程技术状况，直到今日，仍然支持着程序设计上的革新。 JVM（">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-f11a02d865313361.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-184ec893dfb7a3e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-20T02:46:51.824Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】JVM是什么？介绍Java虚拟机">
+<meta name="twitter:description" content="原文链接：https://www.javaworld.com/article/3272244/core-java/what-is-the-jvm-introducing-the-java-virtual-machine.html Java虚拟机是一个执行其他程序的程序。这是一个简单的想法，但这也是最伟大的编程想法之一。它打破了当时的编程技术状况，直到今日，仍然支持着程序设计上的革新。 JVM（">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5613261-f11a02d865313361.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://notyet.com/2018/06/03/【译】JVM是什么？介绍Java虚拟机/">
+
+
+
+
+
+  <title>【译】JVM是什么？介绍Java虚拟机 | 鱼的站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼的站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I Write</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://notyet.com/2018/06/03/【译】JVM是什么？介绍Java虚拟机/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ayufish">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼的站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】JVM是什么？介绍Java虚拟机</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T08:17:00-04:00">
+                2018-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/5613261-f11a02d865313361.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt> </p>
+<p>原文链接：<a href="https://www.javaworld.com/article/3272244/core-java/what-is-the-jvm-introducing-the-java-virtual-machine.html" target="_blank" rel="noopener">https://www.javaworld.com/article/3272244/core-java/what-is-the-jvm-introducing-the-java-virtual-machine.html</a></p>
+<p>Java虚拟机是一个执行其他程序的程序。这是一个简单的想法，但这也是最伟大的编程想法之一。它打破了当时的编程技术状况，直到今日，仍然支持着程序设计上的革新。</p>
+<h3 id="JVM（Java-Virtual-Machine）的用途和定义"><a href="#JVM（Java-Virtual-Machine）的用途和定义" class="headerlink" title="JVM（Java Virtual Machine）的用途和定义"></a>JVM（Java Virtual Machine）的用途和定义</h3><p>JVM有两个主要功能：允许Java程序运行在任何设备或操作系统（即“一次编写，到处运行”原则），以及管理和优化程序内存。Java在1995年发行时，所有的计算机程序都面向特定的操作系统编写，并且程序的内存由软件开发者管理。因此，JVM的诞生对于开发者是一个启示。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5613261-184ec893dfb7a3e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>  </p>
+<p>有一个对JVM的专业定义是很有用的，同时在软件开发者的思考中，它也有日常化的概念。让我们做如下定义：</p>
+<p><strong>•  专业方面：</strong>JVM制定了程序执行代码的规范，并且提供程序运行时的环境。</p>
+<p><strong>•  日常方面：</strong>JVM就是我们运行Java程序的方式。我们配置JVM，然后依赖它在程序执行期间管理资源。</p>
+<p>开发者们在谈到JVM时，通常我们谈的是运行在机器上尤其是服务器上的进程，这代表和控制了Java应用的资源分配。与之相比，JVM规范的概念描述的是构建一个执行这些任务的程序需要多少资源。</p>
+<blockquote>
+<p><strong>JVM由谁开发与维护？</strong></p>
+<p>JVM由一些非常聪明的开发者，联合企业与开源社区广泛地部署、使用和维护。OpenJDK是Sun微系统公司决定将Java开源的产物，现在由Oracle的Java团队管理，近些年大多数Java的重量级提升都由Oracle工程师们完成。</p>
+</blockquote>
+<h3 id="JVM内存管理"><a href="#JVM内存管理" class="headerlink" title="JVM内存管理"></a>JVM内存管理</h3><p>一个运行的JVM中最常见的交互作用是检查堆和栈中的内存使用情况，最频繁的调整是对JVM内存调度的调整。</p>
+<h4 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h4><p>在Java之前，所有程序的内存都由程序员管理，在Java中，JVM接管了这一工作。JVM通过一个叫做垃圾收集的进程来管理内存，它持续地识别出并清除掉Java程序中不再被使用内存。垃圾收集发生在一个运行的JVM中。</p>
+<p>早期Java遭到很多批评，因为它不像C++那么接近底层，因此速度不快。尤其是垃圾收集备受争议。自那时起，各种算法和探讨被提出和应用到垃圾收集上。经过持续的发展和优化，垃圾收集的效率已经被大大提升。</p>
+<blockquote>
+<p><strong>“ 接近底层 ”意味着什么?</strong></p>
+<p>当程序员说一门编程语言或平台“ 接近底层 ”，意思是指开发者可以以编码的形式管理操作系统的内存。理论上，程序员可以通过规定多少内存被使用以及什么时候销毁它而编写出更高性能的程序。大多数情况下，将内存管理工作委托给像JVM这样更高层的进程产生了更高的开发效率，并且相比自己管理更不容易出错。</p>
+</blockquote>
+<h3 id="JVM三大部分"><a href="#JVM三大部分" class="headerlink" title="JVM三大部分"></a>JVM三大部分</h3><p>可以说JVM拥有三个层面：规范、实现、和实例。让我们一一探讨。</p>
+<h4 id="1-JVM规范"><a href="#1-JVM规范" class="headerlink" title="1.JVM规范"></a>1.JVM规范</h4><p>首先，JVM是一个软件规范。为了使它的实现发挥尽可能大的创造力，JVM规范用一种有点写意的方式指明它的实现细节并不包含在规范内：</p>
+<blockquote>
+<p>“想要正确地实现Java虚拟机，你只需要阅读类文件设计并且正确地执行里面所指定的操作即可。”</p>
+</blockquote>
+<p>类似地，音乐家巴赫曾经这样描述创造音乐：</p>
+<blockquote>
+<p>“你所需要去做的只是在正确地时间按下正确的琴键。”</p>
+</blockquote>
+<p>因此，JVM所需要去做的就是使Java程序正确地运行。听起来很简单，也许从外部看起来确实很简单，但实际上这是一项大的工程，尤其是你还要赋予给Java语言强大的功能和灵活性。</p>
+<blockquote>
+<p><strong>作为一个虚拟机的 JVM</strong></p>
+<p>JVM是一个以便捷的方式运行Java类文件的虚拟机。作为一个虚拟机意味着JVM是底层的实际机器的抽象，比如你程序正运行之上的这些服务器。无论运行在什么操作系统或硬件，JVM都创造出了一个可预知的环境供程序稳定运行。但和真正的虚拟机不同的是，JVM并没有创建出一个虚拟的操作系统。把JVM描述为一个托管的运行时环境或是一个加工过的虚拟机更为贴切。</p>
+</blockquote>
+<h3 id="2-JVM实现"><a href="#2-JVM实现" class="headerlink" title="2.JVM实现"></a>2.JVM实现</h3><p>实施JVM的规范开发出一个真实的软件程序，我们称之为JVM实现。事实上，目前已经有很多JVM实现，开源闭源的都有。OpenJDK的HotSpot是一个作为参考的实现，它保留着全世界最全面的尝试和测试代码库。HotSpot同时也是最普遍使用的JVM。</p>
+<p>几乎所有获得许可的JVM都是从OpenJDK和HotSpot JVM衍生而来，包括Oracle发行的JDK。开发者们根据OpenJDK创造一个许可的虚拟机通常是因为渴望去获得面向特定操作系统的性能提升。比如，你下载的JVM作为Java运行时环境的一部分就和操作系统密切相关联。</p>
+<h3 id="3-JVM实例"><a href="#3-JVM实例" class="headerlink" title="3.JVM实例"></a>3.JVM实例</h3><p>在JVM规范被实现和作为一个软件产品发行后， 你可以把它作为一个程序下载和运行它。这个下载的程序就是一个JVM实例（或者称为实例化的版本）。</p>
+<p>大多数情况下，当开发者们谈到“JVM”，我们指的是运行在开发过程或生产环境中的JVM实例。你可能会说，“那台服务器上JVM用了多少内存”，或者，“难以置信我创造了一个循环调用导致了栈溢出错误直接把JVM搞崩溃了，这真是个是新手才犯的错误啊！”。</p>
+<blockquote>
+<p><strong>软件规范是什么?</strong></p>
+<p>软件规范是一个人类可读的文档，它描述了一个软件系统应该怎样运作。一份文档的目的是为工程师们创造一个编码的清晰描述和需求规范。</p>
+</blockquote>
+<h3 id="在JVM中加载和执行类文件"><a href="#在JVM中加载和执行类文件" class="headerlink" title="在JVM中加载和执行类文件"></a>在JVM中加载和执行类文件</h3><p>我们已经谈论过JVM在运行Java应用中所扮演的角色，但是它如何执行它的功能呢？为了运行Java应用，JVM依赖于Java的类加载器和一个Java执行引擎。</p>
+<h4 id="JVM中的Java类加载器"><a href="#JVM中的Java类加载器" class="headerlink" title="JVM中的Java类加载器"></a>JVM中的Java类加载器</h4><p>在Java中，一切都是类，所有的应用都由类构建而来。一个应用可以由一个或上千个类构成。为了运行Java应用，JVM必须将编译后的.class文件加载进例如服务器这样的环境中，使它们可以被访问到。JVM依赖类加载器去执行这个功能。</p>
+<p>Java类加载器是JVM的一部分，它可以将类加载进内存并且使它们可以被获取到和执行。类加载器使用到了像懒加载和缓存的技术使类的加载能够尽可能地高效率。也就是说，类的加载并不是一个史诗级的难题，只是一个轻便的内存管理过程，因此这个技术相对来说是简单的。</p>
+<p>每一个虚拟机都包含一个类加载器。JVM规范描述了在运行时查询和操纵类加载器的标准方法，但是具体还是由JVM实现来负责完成这些功能。从开发者的角度来看，底层的类加载器机制是个典型的黑盒子。</p>
+<h4 id="JVM中的执行引擎"><a href="#JVM中的执行引擎" class="headerlink" title="JVM中的执行引擎"></a>JVM中的执行引擎</h4><p>一旦类加载器完成加载类的工作后，JVM开始执行每一个类的代码。执行引擎是JVM处理这个功能的组件，对于JVM来说，它是必不可少的，事实上，对于所有实际应用，它都是JVM实例的一部分。</p>
+<p>执行代码包括对系统资源的权限管理。JVM执行引擎位于运行中的程序——满足它们对文件、网络和内存资源的需求——和提供这些资源操作系统之间。</p>
+<p><strong>执行引擎如何管理系统资源</strong></p>
+<p>系统资源可以被分为两大类：内存和其他。</p>
+<p>让我们回顾一下，JVM负责处理不再被使用的内存，垃圾收集是执行处理任务的机制。JVM同时也负责分配和保持开发者授意的参照结构。举个例子，JVM执行引擎负责接收JVM中类似“new”这样的关键字，然后将它转化为向指定系统发出的内存分配请求。</p>
+<p>不只是内存，JVM执行引擎还负责管理文件系统的访问以及网络I/O资源。因为JVM可以跨系统交互，所有这些不是很困难的任务。除了管理每个应用的资源需求，执行引擎还必须适应每个系统的环境。这也是JVM可以处理各种各样需求的原因。</p>
+<h3 id="JVM的发展：过去、现在、未来"><a href="#JVM的发展：过去、现在、未来" class="headerlink" title="JVM的发展：过去、现在、未来"></a>JVM的发展：过去、现在、未来</h3><p>1995年，JVM的问世带来了两个革命性的概念，成为了现代软件发展的标准进化方向：“一次编写，到处运行”以及自动的内存管理。软件的互通性在那时是个大胆的概念，但在今天极少的开发者还需要去考虑它。类似地，软件前辈们不得不自己管理内存，而我们这一代是在垃圾收集的概念中成长的。</p>
+<p>我想说James Gosling (译者注：Java发明者)和Brendan Eich(译者注：Javascript发明者)发明了现代编程，但在后来的几十年，成千上万的后来者在它们的想法基础上，进行了重新定义和构建。尽管JVM最初只是为Java使用，但在今天它已经进化成可以支持众多脚本和编程语言，包括Scala, Groovy, 和Kotlin。往前看，很难看到一个JVM不是重要部分的未来。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/27/【译】Linux是什么？/" rel="next" title="【译】Linux是什么？">
+                <i class="fa fa-chevron-left"></i> 【译】Linux是什么？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/05/【译】Node-js是什么？JavaScript运行时说明/" rel="prev" title="【译】Node-js是什么？JavaScript运行时说明">
+                【译】Node-js是什么？JavaScript运行时说明 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ayufish</p>
+              <p class="site-description motion-element" itemprop="description">我的一块净土，分享技术、想法</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM（Java-Virtual-Machine）的用途和定义"><span class="nav-number">1.</span> <span class="nav-text">JVM（Java Virtual Machine）的用途和定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM内存管理"><span class="nav-number">2.</span> <span class="nav-text">JVM内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾收集"><span class="nav-number">2.1.</span> <span class="nav-text">垃圾收集</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM三大部分"><span class="nav-number">3.</span> <span class="nav-text">JVM三大部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JVM规范"><span class="nav-number">3.1.</span> <span class="nav-text">1.JVM规范</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JVM实现"><span class="nav-number">4.</span> <span class="nav-text">2.JVM实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JVM实例"><span class="nav-number">5.</span> <span class="nav-text">3.JVM实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在JVM中加载和执行类文件"><span class="nav-number">6.</span> <span class="nav-text">在JVM中加载和执行类文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的Java类加载器"><span class="nav-number">6.1.</span> <span class="nav-text">JVM中的Java类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的执行引擎"><span class="nav-number">6.2.</span> <span class="nav-text">JVM中的执行引擎</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM的发展：过去、现在、未来"><span class="nav-number">7.</span> <span class="nav-text">JVM的发展：过去、现在、未来</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ayufish</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

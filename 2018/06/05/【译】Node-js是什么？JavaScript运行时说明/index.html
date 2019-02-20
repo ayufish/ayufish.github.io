@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：https://www.infoworld.com/article/3210589/node-js/what-is-nodejs-javascript-runtime-explained.html Node.js是一个精简、快速、跨平台的JavaScript运行时环境，被用在服务器端和桌面应用。    伸缩性、延迟、吞吐量是web服务器的几个核心性能指标。当访问量增大时依旧能保持低延迟和">
+<meta name="keywords" content="Java 思想 技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Node-js是什么？JavaScript运行时说明">
+<meta property="og:url" content="http://notyet.com/2018/06/05/【译】Node-js是什么？JavaScript运行时说明/index.html">
+<meta property="og:site_name" content="鱼的站">
+<meta property="og:description" content="原文链接：https://www.infoworld.com/article/3210589/node-js/what-is-nodejs-javascript-runtime-explained.html Node.js是一个精简、快速、跨平台的JavaScript运行时环境，被用在服务器端和桌面应用。    伸缩性、延迟、吞吐量是web服务器的几个核心性能指标。当访问量增大时依旧能保持低延迟和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-ae44e156b03b2ff9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-cab8bfc3dfb8eaf8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-8a435258f8030128.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-20T03:01:53.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Node-js是什么？JavaScript运行时说明">
+<meta name="twitter:description" content="原文链接：https://www.infoworld.com/article/3210589/node-js/what-is-nodejs-javascript-runtime-explained.html Node.js是一个精简、快速、跨平台的JavaScript运行时环境，被用在服务器端和桌面应用。    伸缩性、延迟、吞吐量是web服务器的几个核心性能指标。当访问量增大时依旧能保持低延迟和">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5613261-ae44e156b03b2ff9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://notyet.com/2018/06/05/【译】Node-js是什么？JavaScript运行时说明/">
+
+
+
+
+
+  <title>【译】Node-js是什么？JavaScript运行时说明 | 鱼的站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼的站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I Write</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://notyet.com/2018/06/05/【译】Node-js是什么？JavaScript运行时说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ayufish">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼的站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】Node-js是什么？JavaScript运行时说明</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-05T10:32:00-04:00">
+                2018-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文链接：<a href="https://www.infoworld.com/article/3210589/node-js/what-is-nodejs-javascript-runtime-explained.html" target="_blank" rel="noopener">https://www.infoworld.com/article/3210589/node-js/what-is-nodejs-javascript-runtime-explained.html</a></p>
+<p>Node.js是一个精简、快速、跨平台的JavaScript运行时环境，被用在服务器端和桌面应用。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5613261-ae44e156b03b2ff9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>  </p>
+<p>伸缩性、延迟、吞吐量是web服务器的几个核心性能指标。当访问量增大时依旧能保持低延迟和高吞吐是不容易的。Node.js是一个通过对服务器请求“非阻塞”响应的方法实现低延迟和高吞吐的JavaScript运行时环境。换句话说，Node.js在等待I/O请求响应时不浪费时间和资源。</p>
+<p>让我接着解释…</p>
+<p>传统的创建web服务器方法，对于每一个进来的请求或连接服务器都产生一个执行线程甚至一个进程来处理请求和做出回应。从概念上说，这似乎非常完美，但实际中这产生了很大的开销。</p>
+<p>尽管创建线程比分配进程花费更少的内存和CPU开销，但这依然是低效的。大量线程的存在使系统负担严重，在线程安排和上下文切换的循环中花费开销，这增加了延迟，同时也限制了服务器的伸缩性和吞吐量。</p>
+<p>Node.js使用了一种不同的方法。它运行了一个单线程的事件循环地向系统注册来处理连接，每一个新连接都会触发JavaScript的回调函数开始执行。回调函数可以使用非阻塞的I/O调用处理请求，在必要时也可以从线程池中生产线程执行阻塞的或CPU密集型的操作并且跨CPU核心达到负载均衡。和利用多线程发挥最强效率的项目包括Apache HTTP Server、各种各样的Java应用服务器、IIS、ASP.NET、以及 Ruby on Rails相比，Node使用回调函数的方法花费更少的内存处理更多的连接。</p>
+<p>Node.js已经被验证除了服务器端，它在桌面应用领域也十分有效。请注意Node应用不仅限于纯JavaScript。你可以使用任何语言替换JavaScript，例如TypeScript和CoffeeScript。Node.js结合了Google Chrome V8 JavaScript引擎，支持ECMAScript 2015 (ES6)语法，并且不需要任何像Babel那样转换ES6和ES5的编译器。</p>
+<p>大量Node的功能来自于它庞大的打包库，可以通过npm命令使用。NPM，the Node package manager，是标准Node.js安装的一部分，尽管它拥有自己独立的主页。</p>
+<h4 id="一些JavaScript的历史"><a href="#一些JavaScript的历史" class="headerlink" title="一些JavaScript的历史"></a>一些JavaScript的历史</h4><p>1995年，Brendan Eich作为Netscape公司的承包商创造了JavaScript语言运行在Web浏览器上——据说，只花了十天。JavaScript最初是被用于在浏览器的文件对象模型(DOM)上启用动画效果和其他控制功能。不久后，一个用在Netscape Enterprise Server上的JavaScript版本问世了。</p>
+<p>JavaScript的命名在当时是出于市场目的，因为彼时Sun公司的Java语言正被广泛地宣传。实际上JavaScript酷似Java语法的外表下主要依赖的是其自身的语言体系。</p>
+<p>起初很多程序员认为JavaScript在“真实工作”中是无用的，因为它的解释器比编译语言慢了一个数量级。这在之后的几个专注于使JavaScript更快的研究中得以改变。显而易见的是，开源的Google Chrome V8 JavaScript引擎，做到了即时编译、内联以及动态代码优化，实际上可以在一些加载时超过C++的代码，大多数情况超过Python的性能。</p>
+<p>基于JavaScript的Node.js诞生于2009年，由Ryan Dahl创造，面向Linux和MacOS，作为一个更具伸缩性的Apache HTTP Server替代品。NPM,由Isaac Schlueter编写，发起于2010年。原生的Node.js Windows版本初次发行于2011年。</p>
+<p>Joyent公司拥有、管理以及支持了Node.js的开发许多年。从2015年开始，Node.js归属于Node.js基金会，由基金会的技术指导委员会管理。同时Node.js也被收录作为Linux基金会协作项目。</p>
+<h4 id="Node-js基本结构"><a href="#Node-js基本结构" class="headerlink" title="Node.js基本结构"></a>Node.js基本结构</h4><p>在上层，Node.js结合了Google V8 JavaScript引擎，一个单线程非阻塞的事件循环，和一个底层的I/O接口。下面基本的代码示例说明了基本的HTTP服务器模式，使用ES6箭头函数（公开的匿名Lambda函数，使用大箭头运算符，=&gt;）进行回调。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5613261-cab8bfc3dfb8eaf8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>  </p>
+<p>代码开头加载了HTTP模块，设置服务器hostname变量为localhost(127.0.0.1)，设置port变量为3000。然后创建了一个服务器和一个回调函数，示例中对于任何请求，大箭头的回调函数永远返回同样的response：statusCode 200（代表成功），content type plain text，以及一个文本回应“Hello World\n”。最后，告诉服务器去监听localhost的3000端口（通过Socket），并且定义一个回调函数当服务器开始舰艇后在控制台打印一条日志信息。如果你使用node命令将这些代码运行在终端或控制台，然后用任意浏览器访问localhost:3000在同一台机器上，你将会看到“Hello World”在你的浏览器上。如果想停止服务器，在终端窗口按下Control-C即可。</p>
+<p>注意在这个例子中实现的每一次调用都是异步、非阻塞的。回调函数在响应事件中执行。createServer回调函数处理一个客户端请求，返回一个响应。listen回调处理listening事件。</p>
+<h4 id="Node-js库"><a href="#Node-js库" class="headerlink" title="Node.js库"></a>Node.js库</h4><p>你可以在下图的左边栏看到，在Node.js的库中有大量的功能函数。在下图右边，你可以看到我们在代码示例中所使用的HTTP模块在早期就包含了客户端和服务器端类。使用TLS或SSL协议的HTTP服务器功能函数放在不同的模块中。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5613261-8a435258f8030128.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>  </p>
+<p>单线程事件循环的一个内在问题是缺少纵向上的伸缩性，因为事件循环只使用一颗CPU核心。而现代CPU核心已经达到了八核心，现代服务器设备往往拥有多个CPU芯片。单线程应用无法充分利用一个拥有24个核心的强健服务器设备的性能。</p>
+<p>你可以弥补这个缺点，尽管需要一些额外的编码。Node.js可以使用<a href="https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options" target="_blank" rel="noopener">child_process.spawn()</a>相关方法创建子进程并且维持两个进程之间的连接，与系统的<a href="http://man7.org/linux/man-pages/man3/popen.3.html" target="_blank" rel="noopener">popen(3)</a>调用类似。</p>
+<p>相比子进程模块，簇模块对于创建一个具伸缩性的服务器更加吸引人。 cluster.fork() 方法创建共享父进程服务器端口的工作进程，实际上在底层就是使用 child_process.spawn() 方法。主进程簇将进来的链接在工作进程间分配，默认情况下，循环的算法与工作线程的负载相关。</p>
+<p>注意，Node.js不提供路由逻辑。如果你想在簇中保持跨连接的状态，你需要在工作进程之外保持住session和登陆对象。</p>
+<h4 id="Node-js包生态系统"><a href="#Node-js包生态系统" class="headerlink" title="Node.js包生态系统"></a>Node.js包生态系统</h4><p>NPM软件中心拥有将近50万个免费、可复用的Node.js代码包，这使它成为全世界最大的软件中心。需要注意的是，大多数NPM包（本质上是包含一个由package.json文件描述项目的文件夹或NPM项目）包含多个模块（你需要使用声明语句加载的程序）。很容易将这两个术语混淆，但在这个语境下它们各自有指定的含义，而不应该互换。</p>
+<p>NPM可以管理本地依赖的特定项目，也可以管理通过网络安装的JavaScript工具。作为本地项目的依赖管理工具时，NPM可以只用一个命令安装，因为项目的所有依赖都通过package.json 文件指明；当作为网络工具管理工具时，NPM通常需要系统级（sudo）权限。</p>
+<p>你无须使用NPM命令行去访问公共NPM软件中心。其他如Facebook的Yarn提供了客户端的体验。同样你还可以在<a href="https://www.npmjs.com/" target="_blank" rel="noopener">NPM website</a>上搜索和浏览工具包。</p>
+<p>你为什么会想用NPM包？大多数情况下，要想得到你运行环境中最新稳定版本的包，通过NPM命令行安装是最快最便捷的方式，尤其是和克隆库源文件后再安装相比。如果你想要最新的版本，你可以向NMP指定一个版本号，这在一个包依赖另一个包并且依赖可能在最新版本下出错时是非常有用的。</p>
+<p>举个例子，Express框架，一个小巧灵活的Node.js web应用框架，提供了一组强大的功能构建单页、多页、和混合式的web应用。最简单、可克隆的库提供在<a href="https://github.com/expressjs/express" target="_blank" rel="noopener">https://github.com/expressjs/express</a>，而Express文档在<a href="https://expressjs.com/" target="_blank" rel="noopener">https://expressjs.com/</a>，一个快捷的使用方式是使用npm命令将它安装进一个已经初始化好的本地工作开发目录，例如：</p>
+<blockquote>
+<p>$  npm install express —save</p>
+</blockquote>
+<p>-save选项，在NPM 5.0之后已经是默认选项，通知给包管理器在安装完成后将Express模块添加进package.json文件中的依赖列表。</p>
+<p>另一个快速使用Express的方式是全局安装可执行的生成器 express(1) ，然后使用它在一个新的工作文件夹中创建应用：</p>
+<blockquote>
+<p>$ npm install -g express-generator@4 $ express /tmp/foo &amp;&amp; cd /tmp/foo</p>
+</blockquote>
+<p>如果这些都已完成，你可以使用NPM安装所有依赖，启动服务器，这依靠生成器创建的package.json文件中的内容：</p>
+<blockquote>
+<p>$ npm install</p>
+<p>$ npm start</p>
+</blockquote>
+<p>很难在NPM的50万软件包中挑选出绝对出色的工具，但有一些类别脱颖而出。Express是Node.js框架中最老最棒的一个例子，我最近在这篇<a href="http://www.infoworld.com/category/node-js/" target="_blank" rel="noopener">文章</a>中谈论到。NPM仓库中另一大类是JavaScript开发工具包，包括browserify，一个模块打包器；bower，浏览器打包管理器；grunt，JavaScript任务运行器；以及gulp，流构建系统。最后，对于Node.js企业开发者来说一个重要的分类是数据库客户端，包括流行的模块像redis、mongoose,firebase和pg(PostgreSQL 客户端)。</p>
+<p>总结一下，Node.js是为服务器端和应用服务的一个跨平台JavaScript运行时环境。它基于一个单线程、非阻塞的事件循环、Google Chrome V8 JavaScript引擎和一个底层的I/O接口构建。拥有各种各样的技术，包括簇模块，允许Node.js的应用在多CPU的核心上也具有伸缩性。在它的核心功能之外， Node.js已经培育了一个在NPM仓库上拥有50万发行和迭代软件包的生态系统，所有软件包可以使用NPM命令行或一个如Yarn这样的替代品安装。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/03/【译】JVM是什么？介绍Java虚拟机/" rel="next" title="【译】JVM是什么？介绍Java虚拟机">
+                <i class="fa fa-chevron-left"></i> 【译】JVM是什么？介绍Java虚拟机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ayufish</p>
+              <p class="site-description motion-element" itemprop="description">我的一块净土，分享技术、想法</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一些JavaScript的历史"><span class="nav-number">1.</span> <span class="nav-text">一些JavaScript的历史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js基本结构"><span class="nav-number">2.</span> <span class="nav-text">Node.js基本结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js库"><span class="nav-number">3.</span> <span class="nav-text">Node.js库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js包生态系统"><span class="nav-number">4.</span> <span class="nav-text">Node.js包生态系统</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ayufish</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

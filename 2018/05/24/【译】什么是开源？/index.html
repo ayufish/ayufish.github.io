@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接: https://opensource.com/resources/what-open-source “开源”指代一些人们可以自由修改和分享的事物。 这个术语在软件发展的背景下起源，指示了一种特殊的方式去创建计算机程序。在今天，“开源”这个词指向了一个更为宽广的价值观——我们称之为“开源方式”。比如开源的项目、开源的产品、积极开放的态度、交流与协作、透明化和面向社区的开发。 什么是">
+<meta name="keywords" content="Java 思想 技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】什么是开源？">
+<meta property="og:url" content="http://notyet.com/2018/05/24/【译】什么是开源？/index.html">
+<meta property="og:site_name" content="鱼的站">
+<meta property="og:description" content="原文链接: https://opensource.com/resources/what-open-source “开源”指代一些人们可以自由修改和分享的事物。 这个术语在软件发展的背景下起源，指示了一种特殊的方式去创建计算机程序。在今天，“开源”这个词指向了一个更为宽广的价值观——我们称之为“开源方式”。比如开源的项目、开源的产品、积极开放的态度、交流与协作、透明化和面向社区的开发。 什么是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5613261-b5e1b154da89109c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-20T02:33:18.856Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】什么是开源？">
+<meta name="twitter:description" content="原文链接: https://opensource.com/resources/what-open-source “开源”指代一些人们可以自由修改和分享的事物。 这个术语在软件发展的背景下起源，指示了一种特殊的方式去创建计算机程序。在今天，“开源”这个词指向了一个更为宽广的价值观——我们称之为“开源方式”。比如开源的项目、开源的产品、积极开放的态度、交流与协作、透明化和面向社区的开发。 什么是">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5613261-b5e1b154da89109c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://notyet.com/2018/05/24/【译】什么是开源？/">
+
+
+
+
+
+  <title>【译】什么是开源？ | 鱼的站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼的站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I Write</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://notyet.com/2018/05/24/【译】什么是开源？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ayufish">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼的站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】什么是开源？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-24T10:30:00-04:00">
+                2018-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/5613261-b5e1b154da89109c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>  </p>
+<p>原文链接: <a href="https://opensource.com/resources/what-open-source" target="_blank" rel="noopener">https://opensource.com/resources/what-open-source</a></p>
+<p>“开源”指代一些人们可以自由修改和分享的事物。</p>
+<p>这个术语在软件发展的背景下起源，指示了一种特殊的方式去创建计算机程序。在今天，“开源”这个词指向了一个更为宽广的价值观——我们称之为“开源方式”。比如开源的项目、开源的产品、积极开放的态度、交流与协作、透明化和面向社区的开发。</p>
+<h4 id="什么是开源软件？"><a href="#什么是开源软件？" class="headerlink" title="什么是开源软件？"></a>什么是开源软件？</h4><p>开源软件指源代码可以被任何人查看、修改和添加的软件。</p>
+<p>“源代码”是软件的一部分，大多数计算机用户并不会看到，而程序员可以编辑代码来改变程序的运行方式。拥有源代码访问权限的程序员可以通过增加新功能或修复Bug来改良程序。</p>
+<h4 id="开源软件和其他类型软件有什么不同？"><a href="#开源软件和其他类型软件有什么不同？" class="headerlink" title="开源软件和其他类型软件有什么不同？"></a>开源软件和其他类型软件有什么不同？</h4><p>一些软件的源代码只有创建者和拥有维护权的个人、团队或组织机构可以修改。这类软件被称为“专利”软件或“闭源”软件（下文统称为闭源）。</p>
+<p>闭源软件只有原作者可以合法地复制、查看和修改。为了使用闭源软件，计算机用户必须同意在没有得到软件作者的明确授权下不得对软件做任何修改。Microsoft  Office 和 Adobe Photoshop是闭源的两个例子。</p>
+<p>开源软件不同，它的作者将源代码开放给想要查看、复制、学习和修改它的人。例如LibreOffice和GNU Image Manipulation Program。</p>
+<p>和闭源软件一样，用户在使用开源软件时也必须接受一些许可条款——但是开源软件的合法许可条款和闭源软件是明显不同的。</p>
+<p>开源许可影响人们使用、学习、修改和发行软件的方式。通常情况下，开源许可授权给用户可以任意地使用它。一些开源许可——人们称之为“著佐权”——规定发行一个修改版开源软件的人必须同时也开放该修改版软件的源代码。此外，也有开源许可规定任何人修改和分享软件的同时必须分享源代码，并且不能够收取任何许可费用。</p>
+<p>从设计上来说，开源软件许可促进了协作和分享，因为这允许其他人对源代码进行修改，其后将改动合并在项目中。开源鼓励计算机程序员在任何时候去使用、查看和修改开源软件，只需他们在分享自己的作品时也允许其他人做同样的事情。</p>
+<h4 id="开源软件只对计算机程序员重要吗？"><a href="#开源软件只对计算机程序员重要吗？" class="headerlink" title="开源软件只对计算机程序员重要吗？"></a>开源软件只对计算机程序员重要吗？</h4><p>不，无论是否是程序员都在开源技术和开源思想中获益。</p>
+<p>早期因特网的设计者使用开源技术构建了大部分因特网——例如Linux操作系统和Apache Web服务器应用——今天任何使用因特网的人都从开源中收益。</p>
+<p>计算机用户的每一次查看网页、查看email、和朋友聊天、听音乐或玩多人游戏，他们的电脑、手机或游戏控制器都使用开源软件来路由和传输数据到他们面前的设备，使他们可以连接到互联网。进行这些重要工作的计算机通常分布在遥远的地方，用户看不到也无法在物理上接触到——这就是为什么人们称这些计算机为“远程计算机”。</p>
+<p>越来越多人依赖远程计算来执行他们从前可能在本地设备上执行的任务。例如他们可以使用在线文字数据处理、email管理和图片编辑软件，不需要在他们的个人电脑上安装和运行软件。相反的，他们仅仅通过使用一个Web浏览器或手机应用去访问这些远程计算机上的程序。当人们在做这些时，他们也参与进了“远程计算”。</p>
+<p>一些人称远程计算为“云计算”，因为它包括合并了本地设备和互联网远程计算机的活动（例如保存文件、分享照片或观看视频），这组成了环绕在人们周围的一团“大气”。</p>
+<p>云计算是在拥有联网设备的日常生活中日益增长的一个方面。一些云计算应用，例如Google Apps，是闭源的。其他的，像ownCloud和Nextcloud，是开源的。</p>
+<p>云计算运行在支撑它流畅和高效运转的额外软件“之上”，因此人们通常认为运行在云计算应用“之下”的软件为这些应用提供了“平台”。云计算平台可以是开源也可以是闭源。OpenStack是开源云计算平台的一个例子。</p>
+<h4 id="为什么人们更喜欢使用开源软件？"><a href="#为什么人们更喜欢使用开源软件？" class="headerlink" title="为什么人们更喜欢使用开源软件？"></a>为什么人们更喜欢使用开源软件？</h4><p>比起闭源软件，人们更喜欢开源软件因为很多个原因，包括：</p>
+<p><strong>控制权。</strong>很多人更喜欢开源软件因为他们对这类软件拥有更多的控制权。他们可以检查代码确保软件没有做他们不想让他做的事情，并且可以修改他们不喜欢的部分。非程序员的用户同样从开源软件中获益，因为他们可以随心所欲地使用这个软件——而不只是被允许做其他人认为他们应该做的事。</p>
+<p><strong>训练。</strong>其他人喜欢开源软件因为它帮助他们成为更好的程序员。开源软件的源代码是可以公开使用的，学生可以轻松地从中学习以编写出更好的软件。学生们也可以和其他人分享作品，邀请评论和批评，同时获得技能上的提升。当人们发现程序源代码中的错误，他们可以和其他人分享这些错误来帮助他们自身避免犯同样的问题。</p>
+<p><strong>安全。</strong>一些人更喜欢开源软件的原因是他们认为开源软件比闭源软件更加安全和稳定。因为任何人都可以查看和修改开源软件，一些人就可以发现和修正程序作者可能没有注意到的错误和遗漏。如此多的程序员可以在一个开源软件开发而不需要请求原作者的许可，所以他们可以比在闭源软件上更快地修复、升级软件。</p>
+<p><strong>稳定。</strong>很多人因为重要、长期的项目而更喜欢开源软件。程序员们公开地发行开源软件的源代码，所以依赖这些软件进行重要任务的用户可以确保他们的工具不会突然消失或者因为软件创造者停止开发而导致软件无人维护。此外，开源软件往往根据开放的标准来合并和维护。</p>
+<h4 id="“开源”只是一些免费的事物罢了？"><a href="#“开源”只是一些免费的事物罢了？" class="headerlink" title="“开源”只是一些免费的事物罢了？"></a>“开源”只是一些免费的事物罢了？</h4><p>不，这是最通常的关于“开源”含义的误解，这个术语的含义不只是经济上的。</p>
+<p>开源软件程序员可以可以根据他们创造或发行的开源软件进行收费。但是在一些情况下，因为当他们售卖软件给其他人时，开源协议可能规定他们公开他们的源代码，所以一些程序员发现向用户收取软件服务和技术支持（而不是软件本身）费用更加获利。这时候，软件保持免费，他们通过协助用户安装、使用和排除故障获取收益。</p>
+<p>虽然开源软件可能是免费的，但是面向开源软件的编程技能和故障排除能力可以非常值钱。很多雇主明确地愿意寻找拥有开发开源软件经验的程序员。</p>
+<h4 id="软件“之外”的开源是什么？"><a href="#软件“之外”的开源是什么？" class="headerlink" title="软件“之外”的开源是什么？"></a>软件“之外”的开源是什么？</h4><p>在<a href="https://opensource.com" target="_blank" rel="noopener">opensource.com</a>，我们愿意去说我们对开源方式应用在软件之外的价值观和原则很感兴趣。我们愿意去思考开源不只是去开发和授权计算机软件，同时也是一种态度。</p>
+<p>在生活的所有方面上探讨，“开源的方式”意味着表达一种意愿去分享、与其他人合作的方式，这是透明的（因此其他人可以看到和加入进来），拥抱失败把它当做为是一次提升，并且希望——甚至鼓励——每一个人都能做同样的事情。</p>
+<p>同时它也意味着承诺去扮演一个活跃的角色使世界变得更美好，这需要每个人都能去接近这个世界被构想的样子。</p>
+<p>这个世界充满了“源代码”——蓝图、配方、规则——指引和塑造我们思考和行动的方式。我们相信这些最根本的代码（无论它是什么形式）应该是开放、可以接近和可分享的——由此人们可以贡献自己的力量使它变得更好。</p>
+<p>在这里，我们谈论开源如何影响生活的所有领域——科学，教育，政府，制造业，健康，法律和组织的动力。我们是一个志向去告诉其他人为何开源是最好的方式的社区，因为对开源的热爱就像其他事物一样：分享使之变得更好。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/24/【译】oracle数据库如何修改SID/" rel="next" title="【译】oracle数据库如何修改SID">
+                <i class="fa fa-chevron-left"></i> 【译】oracle数据库如何修改SID
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/27/【译】Linux是什么？/" rel="prev" title="【译】Linux是什么？">
+                【译】Linux是什么？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ayufish</p>
+              <p class="site-description motion-element" itemprop="description">我的一块净土，分享技术、想法</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是开源软件？"><span class="nav-number">1.</span> <span class="nav-text">什么是开源软件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开源软件和其他类型软件有什么不同？"><span class="nav-number">2.</span> <span class="nav-text">开源软件和其他类型软件有什么不同？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开源软件只对计算机程序员重要吗？"><span class="nav-number">3.</span> <span class="nav-text">开源软件只对计算机程序员重要吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么人们更喜欢使用开源软件？"><span class="nav-number">4.</span> <span class="nav-text">为什么人们更喜欢使用开源软件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“开源”只是一些免费的事物罢了？"><span class="nav-number">5.</span> <span class="nav-text">“开源”只是一些免费的事物罢了？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件“之外”的开源是什么？"><span class="nav-number">6.</span> <span class="nav-text">软件“之外”的开源是什么？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ayufish</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
